@@ -1,7 +1,7 @@
 var gameScene = new Phaser.Scene('game');
 var score = { id: null, value: 0 };
 var lives = 3;
-var player, ball, ai, music, padSND, bounceSND, round, rounds;
+var player, ball, ai, music, padSND, bounceSND, round, rounds, background, emitter, particles;
 var gamemode = false;
 
 var config = {
@@ -18,6 +18,12 @@ gameScene.init = function() {
 }
 
 gameScene.preload = function() {
+    this.load.image('backdrop', './Assets/PNG/Retina/background_brown.png');
+    this.load.image('player', './Assets/PNG/Retina/block_narrow.png');
+    this.load.image('ai', './Assets/PNG/Retina/block_narrow2.png');
+    this.load.image('ball', './Assets/PNG/Retina/ball_red_small.png');
+    this.load.image('star', './Assets/PNG/Retina/star.png');
+    
     this.load.audio('newer', './newer-wave-by-kevin-macleod-from-filmmusic-io.mp3');
     this.load.audio('bounce', './bounce.wav');
     this.load.audio('pad', './pad.wav');
@@ -25,20 +31,30 @@ gameScene.preload = function() {
 
 gameScene.create = function() {
 
+    background = this.add.tileSprite( 0, 0, 2000, 1125, 'backdrop');
+    background.setPosition( 1000, 1125 / 2)
+    
     music = this.sound.add('newer');
     padSND = this.sound.add('pad');
     bounceSND = this.sound.add('bounce');
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     
-    player = this.add.rectangle( 0, 0, 50, 250, 0x00ffff );
+    player = this.add.sprite( 0, 0, 'player' );
     player.setOrigin( 0.5 );
     player.x = 100;
     player.y = 1125/2;
     player.score = this.add.text( 1000 - ( 32 * 2 ), 50, '0', { fontFamily: 'monospace', fontSize: '32px', fill: '#0FF' } );
     player.value = 0;
 
-    ball = this.add.rectangle( 0, 0, 25, 25, 0xffff00 );
+    particles = this.add.particles('star');
+    emitter = particles.createEmitter();
+    emitter.setSpeed(50);
+    emitter.setBlendMode(Phaser.BlendModes.ADD);
+    emitter.minParticleScale = 0.15;
+    emitter.maxParticleScale = 0.35;
+    
+    ball = this.add.sprite( 0, 0, 'ball' );
     ball.setOrigin( 0.5 );
     ball.x = 1000;
     ball.y = 1125/2;
@@ -48,7 +64,8 @@ gameScene.create = function() {
     if ( Math.round( Math.random() ) == 0 ) { ball.flagX = true; } else { ball.flagX = false; }
     if ( Math.round( Math.random() ) == 0 ) { ball.flagY = true; } else { ball.flagY = false; }
 
-    ai = this.add.rectangle( 0, 0, 50, 250, 0xff0000 );
+    ai = this.add.sprite( 0, 0, 'ai' );
+    ai.tint = 0xff0000;
     ai.setOrigin( 0.5 );
     ai.x = 1900;
     ai.y = 1125/2;
@@ -58,6 +75,8 @@ gameScene.create = function() {
     round = this.add.text ( 900, 1000, 'Round 0', { fontFamily: 'monospace', fontSize: '32px', fill: '#FFF' } )
 
     this.add.text ( 1000, 50, '|', { fontFamily: 'monospace', fontSize: '32px', fill: '#FFF' } )
+    
+    
 
 }
 
@@ -95,6 +114,8 @@ gameScene.update = function() {
             if ( ball.y > ai.y ) { ai.y+=5 }
             if ( ball.y < ai.y ) { ai.y-=5 }
         }
+        
+        emitter.setPosition( ball.x, ball.y );
 
     }
 

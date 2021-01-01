@@ -1,0 +1,39 @@
+canvas {
+    position: absolute;
+    width: 90%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    border: aqua solid 1px;
+    width: auto;
+    background-color: black;
+    padding: 32px;
+    color: aqua
+}
+
+div input,
+button {
+    background-color: black;
+    color: aqua;
+    border: aqua solid;
+    padding: 10px;
+    margin: 10px;
+}
+
+button {
+    font-size: 32px;
+}
+
+button:hover {
+    background-color: black;
+    color: lime;
+    border: lime solid;
+}
