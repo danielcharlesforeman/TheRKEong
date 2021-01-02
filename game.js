@@ -75,8 +75,6 @@ gameScene.create = function() {
     round = this.add.text ( 900, 1000, 'Round 0', { fontFamily: 'monospace', fontSize: '32px', fill: '#FFF' } )
 
     this.add.text ( 1000, 50, '|', { fontFamily: 'monospace', fontSize: '32px', fill: '#FFF' } )
-    
-    
 
 }
 
