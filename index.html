@@ -15,7 +15,16 @@
         <label for="ai">Enter AI level</label><br>
         <input type="number" max="1" min="0" step="0.05" value="0.35" id="ai"><br>
         <label for="rounds">Enter Number of rounds</label><br>
-        <input type="rounds" max="99" min="0" value="13" id="rounds"><br><br>
+        <input type="rounds" max="99" min="0" value="13" id="rounds"><br>
+        <label for="cars">Choose Controller:</label>
+
+        <select id="controller">
+          <option value="0">Arrow keys</option>
+          <option value="1">WASD</option>
+          <option value="2">Controller</option>
+          <option value="3">Mobile Touch Screen</option>
+        </select>
+        <br><br>
         <button onclick="start()" align="center">Start Game</button>
         <h2>Music copyright</h2>
         <p>Newer Wave by Kevin MacLeod<br> Link: https://incompetech.filmmusic.io/song/7016-newer-wave<br> License: https://filmmusic.io/standard-license</p>
